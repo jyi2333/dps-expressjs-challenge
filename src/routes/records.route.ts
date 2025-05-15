@@ -25,4 +25,16 @@ router.post('/', (req, res) => {
 	res.status(201).json({ id });
 });
 
+//read a record by id
+router.get('/:id', (req, res) => {
+	const id = req.params.id;
+	const report = RecordService.getRecordById(id);
+
+	if (!report) {
+		return res.status(404).json({ error: 'Report not found' });
+	}
+
+	res.json(report);
+});
+
 export default router;

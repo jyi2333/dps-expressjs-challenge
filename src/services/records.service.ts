@@ -11,3 +11,14 @@ export function createRecord(text: string, projectid: string) {
 
 	return id;
 }
+
+export function getRecordById(id: string) {
+	const result = db.query('SELECT * FROM reports WHERE id = @id', { id });
+	return result[0];
+}
+
+export function getRecordsByProjectId(projectid: string) {
+	return db.query('SELECT * FROM reports WHERE projectid = @projectid', {
+		projectid,
+	});
+}

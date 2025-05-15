@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as ProjectService from '../services/projects.service';
+import * as RecordService from '../services/records.service';
 
 const router = Router();
 //create a project
@@ -57,4 +58,10 @@ router.delete('/:id', (req, res) => {
 	res.json({ message: 'Project deleted successfully' });
 });
 
+//read all reports of a project by project id
+router.get('/:id/records', (req, res) => {
+	const projectid = req.params.id;
+	const reports = RecordService.getRecordsByProjectId(projectid);
+	res.json(reports);
+});
 export default router;
