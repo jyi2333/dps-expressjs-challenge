@@ -9,3 +9,12 @@ export function createProject(name: string, description?: string) {
 	);
 	return id;
 }
+
+export function getAllProjects() {
+	return db.query('SELECT * FROM projects');
+}
+
+export function getProjectById(id: string) {
+	const result = db.query('SELECT * FROM projects WHERE id = @id', { id });
+	return result[0];
+}
