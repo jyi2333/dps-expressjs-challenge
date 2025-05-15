@@ -22,3 +22,13 @@ export function getRecordsByProjectId(projectid: string) {
 		projectid,
 	});
 }
+
+export function updateRecord(id: string, text?: string, projectid?: string) {
+	return db.run(
+		`UPDATE reports
+     SET text = @text,
+         projectid = @projectid
+     WHERE id = @id`,
+		{ id, text, projectid },
+	).changes;
+}

@@ -37,4 +37,35 @@ router.get('/:id', (req, res) => {
 	res.json(report);
 });
 
+//update a record by record id, when the corresponding project exists
+router.put('/:id', (req, res) => {
+	const id = req.params.id;
+	const { text, projectid } = req.body;
+
+	if (!text && !projectid) {
+		return res.status(400).json({
+			error: 'At least one field (text or projectid) is required',
+		});
+	}
+
+	if (projectid) {
+		const project = ProjectService.getProjectById(projectid);
+		if (!project) {
+			return res
+				.status(400)
+				.json({ error: 'Invalid projectid: project not found' });
+		}
+	}
+
+	const updated = RecordService.updateRecord(id, text, projectid);
+
+	if (updated === 0) {
+		return res
+			.status(404)
+			.json({ error: 'Report not found or no change applied' });
+	}
+
+	res.json({ message: 'Report updated successfully' });
+});
+
 export default router;
