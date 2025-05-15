@@ -29,4 +29,20 @@ router.get('/:id', (req, res) => {
 	res.json(project);
 });
 
+//update a certain project by id
+router.put('/:id', (req, res) => {
+	const id = req.params.id;
+	const { name, description } = req.body;
+
+	const updated = ProjectService.updateProject(id, name, description);
+
+	if (updated === 0) {
+		return res
+			.status(404)
+			.json({ error: 'Project not found or no changes applied' });
+	}
+
+	res.json({ message: 'Project updated successfully' });
+});
+
 export default router;

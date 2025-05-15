@@ -18,3 +18,13 @@ export function getProjectById(id: string) {
 	const result = db.query('SELECT * FROM projects WHERE id = @id', { id });
 	return result[0];
 }
+
+export function updateProject(id: string, name?: string, description?: string) {
+	return db.run(
+		`UPDATE projects
+     SET name = @name,
+         description = @description
+     WHERE id = @id`,
+		{ id, name, description },
+	).changes;
+}
