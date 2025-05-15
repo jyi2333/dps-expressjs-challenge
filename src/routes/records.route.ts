@@ -68,4 +68,16 @@ router.put('/:id', (req, res) => {
 	res.json({ message: 'Report updated successfully' });
 });
 
+//delete a record by id
+router.delete('/:id', (req, res) => {
+	const id = req.params.id;
+	const deleted = RecordService.deleteRecord(id);
+
+	if (deleted === 0) {
+		return res.status(404).json({ error: 'Report not found' });
+	}
+
+	res.json({ message: 'Report deleted successfully' });
+});
+
 export default router;

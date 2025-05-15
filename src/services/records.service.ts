@@ -32,3 +32,7 @@ export function updateRecord(id: string, text?: string, projectid?: string) {
 		{ id, text, projectid },
 	).changes;
 }
+
+export function deleteRecord(id: string) {
+	return db.run('DELETE FROM reports WHERE id = @id', { id }).changes;
+}
