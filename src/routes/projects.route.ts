@@ -45,4 +45,16 @@ router.put('/:id', (req, res) => {
 	res.json({ message: 'Project updated successfully' });
 });
 
+//delete a certain project by id
+router.delete('/:id', (req, res) => {
+	const id = req.params.id;
+	const deleted = ProjectService.deleteProject(id);
+
+	if (deleted === 0) {
+		return res.status(404).json({ error: 'Project not found' });
+	}
+
+	res.json({ message: 'Project deleted successfully' });
+});
+
 export default router;
