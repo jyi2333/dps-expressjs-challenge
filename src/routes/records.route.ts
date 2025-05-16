@@ -25,6 +25,18 @@ router.post('/', (req, res) => {
 	res.status(201).json({ id });
 });
 
+//retrieves all reports where the same word appears at least three times
+router.get('/search', (req, res) => {
+	const word = req.query.word as string;
+
+	if (!word) {
+		return res.status(400).json({ error: 'Missing search word' });
+	}
+
+	const results = RecordService.findReportsByWordFrequency(word, 3);
+	res.json(results);
+});
+
 //read a record by id
 router.get('/:id', (req, res) => {
 	const id = req.params.id;

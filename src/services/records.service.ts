@@ -36,3 +36,17 @@ export function updateRecord(id: string, text?: string, projectid?: string) {
 export function deleteRecord(id: string) {
 	return db.run('DELETE FROM reports WHERE id = @id', { id }).changes;
 }
+
+export function findReportsByWordFrequency(word: string, threshold: number) {
+	const reports = db.query('SELECT * FROM reports') as { text: string }[];
+	const pattern = new RegExp(`\\b${escapeRegex(word)}\\b`, 'gi');
+
+	return reports.filter((report: { text: string }) => {
+		const matches = report.text.match(pattern);
+		return matches && matches.length >= threshold;
+	});
+}
+
+function escapeRegex(str: string) {
+	return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
