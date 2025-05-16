@@ -30,5 +30,7 @@ export function updateProject(id: string, name?: string, description?: string) {
 }
 
 export function deleteProject(id: string) {
+	//delete all records of project by id
+	db.run('DELETE FROM reports WHERE projectid = @id', { id });
 	return db.run('DELETE FROM projects WHERE id = @id', { id }).changes;
 }
